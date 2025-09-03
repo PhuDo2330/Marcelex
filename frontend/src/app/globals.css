@@ -1,0 +1,199 @@
+@import "tailwindcss";
+@import "./tokens.css";
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+}
+/* ==== Marcelex theme tokens ==== */
+:root {
+    --brand-900: #0a1726; /* deepest */
+    --brand-800: #0b1d33;
+    --brand-700: #0e2744;
+    --brand-600: #123357;
+    --brand-500: #14406d; /* accents on light surfaces */
+    --sidebar-bg: var(--brand-800);
+    --sidebar-fg: #e8eef7;
+    --sidebar-muted: #a9b7ce;
+    --sidebar-hover: #10263e;
+    --sidebar-active: #173a5c;
+    --line: #e6e8eb;
+}
+
+/* Optional better font smoothing */
+html, body {
+    background: #fff;
+}
+
+/* --- Metallic shine sweep for wordmark --- */
+@keyframes mxx-sweep {
+    0% {
+        left: -60%;
+    }
+
+    100% {
+        left: 120%;
+    }
+}
+
+/* Avoid motion for those who prefer reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    .mxx-shiny-text::after {
+        animation: none !important;
+    }
+}
+
+.mxx-shiny-text {
+    position: relative;
+    /* subtle metallic gradient for base text (works with color:transparent + bg-clip) */
+    background: linear-gradient(90deg, #d1d5db 0%, #ffffff 30%, #cbd5e1 60%, #f3f4f6 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent; /* reveal gradient */
+}
+
+    .mxx-shiny-text::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -60%;
+        width: 55%;
+        height: 100%;
+        pointer-events: none;
+        /* narrow bright streak */
+        background: linear-gradient( 90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.9) 45%, rgba(255,255,255,0) 100% );
+        transform: skewX(-20deg);
+        animation: mxx-sweep 2.6s linear infinite;
+        opacity: 0.6;
+        filter: blur(0.3px);
+    }
+
+/* ===== Metallic shine sweep for the wordmark (subtle + slower) ===== */
+@keyframes mxx-sweep {
+    0% {
+        left: -60%;
+    }
+
+    100% {
+        left: 120%;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .mxx-shiny-text::after {
+        animation: none !important;
+    }
+}
+
+.mxx-shiny-text {
+    position: relative;
+    /* softer contrast base gradient */
+    background: linear-gradient(90deg, #e5e7eb 0%, #ffffff 30%, #dbe1e8 65%, #f5f7fa 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+    .mxx-shiny-text::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -60%;
+        width: 38%; /* narrower streak */
+        height: 100%;
+        pointer-events: none;
+        background: linear-gradient( 90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.55) 48%, rgba(255,255,255,0) 100% );
+        transform: skewX(-18deg);
+        animation: mxx-sweep 6.2s linear infinite; /* ← slower */
+        opacity: 0.22; /* ← lighter */
+        filter: blur(0.2px);
+    }
+
+.text-gradient-nebula {
+    background: linear-gradient(90deg, #16C3A8, #20D3F0, #C084FC);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.bg-gradient-nebula {
+    background: linear-gradient(90deg, #16C3A8, #20D3F0, #C084FC);
+}
+:root {
+    /* “nebula” accent that matches your logo */
+    --accent-1: #16C3A8;
+    --accent-2: #20D3F0;
+    --accent-3: #C084FC;
+    /* surfaces */
+    --surface: rgba(255,255,255,0.9);
+    --surface-dark: rgba(10,10,10,0.5);
+}
+/* ===== Hover spotlight & accent ring for Surface ===== */
+@media (prefers-reduced-motion: reduce) {
+    .surface-spotlight {
+        transition: none !important;
+    }
+}
+
+/* Soft radial glow that follows the cursor */
+.surface-spotlight::after {
+    content: "";
+    position: absolute;
+    inset: -1px; /* covers the ring too */
+    border-radius: inherit;
+    pointer-events: none;
+    /* spotlight centered at CSS vars --mx/--my set by component */
+    background: radial-gradient( 140px 140px at var(--mx) var(--my), rgba(32,211,240,0.12), /* cyan glow */
+    rgba(32,211,240,0.00) 55% );
+    opacity: 0;
+    transition: opacity .18s ease;
+}
+
+.surface-spotlight:hover::after {
+    opacity: 1;
+}
+
+/* Subtle accent ring on hover (same brand palette as logo) */
+.surface-spotlight::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    background: linear-gradient(90deg, var(--accent-1), var(--accent-2), var(--accent-3));
+    opacity: 0;
+    transition: opacity .18s ease;
+    mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    padding: 1px; /* 1px gradient ring */
+    mask-composite: exclude;
+    -webkit-mask-composite: xor;
+}
+
+.surface-spotlight:hover::before {
+    opacity: .6;
+}
+
+
+
+
+
